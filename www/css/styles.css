@@ -15,7 +15,20 @@
 
 body {
 	font-family: "Open Sans", sans-serif;
+    position:relative;
+    height:100%;
 }
+#bgImg {
+    background-repeat: no-repeat;
+    position: absolute;
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    height:100%;
+    width:100%;
+}
+
 i[class^="fa-"] {
     display: flex;
     justify-content: center;
@@ -96,7 +109,7 @@ main {
 }
 #hero {
 	/* background-color: lightblue; */
-	padding: 0 10% 10%;
+	padding: 5% 10% 10%;
 	/* height: 50vh; */
 	max-height: 320px;
 	display: flex;
@@ -216,4 +229,95 @@ main {
 .forecast-card .forecast-symbol {
     text-align:center;
     margin:10px 0;
+}
+
+
+
+.con-thunderstorm #bgImg {
+    background-image: url('../img/brandon-morgan-3qucB7U2l7I-unsplash.jpg');
+    background-size: cover;
+    filter: brightness(44%);
+    background-position: center center;
+} 
+.con-thunderstorm #hero, 
+.con-thunderstorm #sunmovement, 
+.con-thunderstorm #misc {
+    color:#fff;
+}
+.con-rainy #bgImg {
+    background-image: url('../img/brazil-topno-7HrfSRNBzf8-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(74%);
+}
+.con-rainy #hero, 
+.con-rainy #sunmovement, 
+.con-rainy #misc {
+    color:#fff;
+}
+.con-snow #bgImg {
+    background-image: url('../img/aditya-vyas-PzhmEp_aDU4-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(65%);
+}
+.con-snow #hero, 
+.con-snow #sunmovement, 
+.con-snow #misc {
+    color:#fff;
+}
+.con-hazy #bgImg {
+    background-image: url('../img/glenn-abelson-Hwz4MZjzxTM-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(65%);
+}
+.con-hazy #hero, 
+.con-hazy #sunmovement, 
+.con-hazy #misc {
+    color:#fff;
+}
+.con-clearday #bgImg {
+    background-image: url('../img/grooveland-designs-zjoydJb17mE-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(82%) saturate(111%);
+}
+.con-clearday #hero, 
+.con-clearday #sunmovement, 
+.con-clearday #misc {
+    color:#fff;
+}
+.con-clearnight #bgImg {
+    background-image: url('../img/klemen-vrankar-lj4XbXbD0Fk-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(82%) saturate(111%);
+}
+.con-clearnight #hero, 
+.con-clearnight #sunmovement, 
+.con-clearnight #misc {
+    color:#fff;
+}
+.con-cloudyday #bgImg {
+    background-image: url('../img/billy-huynh-v9bnfMCyKbg-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(90%) saturate(90%);
+}
+.con-cloudyday #hero, 
+.con-cloudyday #sunmovement, 
+.con-cloudyday #misc {
+    color:#000;
+}
+.con-cloudynight #bgImg {
+    background-image: url('../img/henry-co-o0acp0ZdhbA-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(60%);
+}
+.con-cloudynight #hero, 
+.con-cloudynight #sunmovement, 
+.con-cloudynight #misc {
+    color:#fff;
 }
