@@ -28,6 +28,10 @@ function RenderWeather(weatherJSON) {
     const countryCode = weatherJSON.sys.country;
     const sunset = weatherJSON.sys.sunset;
     const sunrise = weatherJSON.sys.sunrise;
+    const timezone = weatherJSON.timezone;
+
+    const localSunrise = moment.utc(sunrise, 'X').add(timezone, 'seconds').format('hh:mm a');
+    const localSunset = moment.utc(sunset, 'X').add(timezone, 'seconds').format('hh:mm a');
     
 
     $('#temp').text('');
@@ -44,15 +48,15 @@ function RenderWeather(weatherJSON) {
     if(minTemp) $('#mintemp').text(Math.round(minTemp));
     if(maxTemp) $('#maxtemp').text(Math.round(maxTemp));
     if(feelsLike) $('#feelslike').text(Math.round(feelsLike));
-    if(pressure) $('#pressure').text(Math.round(feelsLike));
-    if(humidity) $('#humidity').text(Math.round(feelsLike));
-    if(windSpeed) $('#windSpeed').text(Math.round(feelsLike));
+    if(pressure) $('#pressure').text(pressure);
+    if(humidity) $('#humidity').text(humidity);
+    if(windSpeed) $('#windSpeed').text(windSpeed);
     if(city) $('#location').text(city);
     if(description) $('#description').text(description);
-    if(id) $('#conditionicon > i').addClass(`owf owf-${id}`);
+    if(id) $('#conditionicon > i').addClass(`wi wi-owm-${id}`);
     if(countryCode) $('#countryCode > img').attr('src', `${COUNTRY_FLAG_ENDPOINT}/${countryCode}`);
-    if(sunset) $('#sunset').text(sunset);
-    if(sunrise) $('#sunrise').text(sunrise);
+    if(sunset) $('#sunset').text(localSunset);
+    if(sunrise) $('#sunrise').text(localSunrise);
 
     // if(weatherJSON.sys.country) {
     //     $('#countryCode').text(weatherJSON.sys.country);

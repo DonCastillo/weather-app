@@ -22,11 +22,11 @@ i[class^="fa-"] {
     align-items: center;
 }
 #wrapper {
-	padding-top: 134px;
+	padding-top: 88px;
 	position: relative;
 }
 header {
-	padding: 25px 0;
+	padding: 10px 0;
 	position: fixed;
 	width: 100%;
 	top: 0;
@@ -61,6 +61,9 @@ input {
 a {
 	text-decoration: none;
 	color: unset;
+}
+h5 {
+    margin-bottom:0;
 }
 
 #options {
@@ -158,12 +161,25 @@ main {
 	font-weight: bold;
 	font-size: 3em;
 }
-#sunmovement {
-    /* display:flex;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-content: center; */
+#sunmovement, #misc {
+    /* padding-top:10px;
+    padding-bottom:10px; */
 }
-#sunrise, #sunset {
-    background-color:yellowgreen;
+#misc .col,
+#sunmovement .col {
+    /* background-color:pink; */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+#misc i,
+#sunmovement i {
+    font-size:2rem;
+    margin-right:10px;
+}
+#sunrise, #sunset, #pressure, #humidity, #windSpeed {
+    font-size: 1rem;
 }

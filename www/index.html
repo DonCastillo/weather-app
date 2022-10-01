@@ -29,7 +29,12 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
         <meta http-equiv="Content-Security-Policy" 
-              content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; media-src *; connect-src 'self' https://api.openweathermap.org; font-src 'self' fonts.gstatic.com; img-src 'self' https://countryflagsapi.com/;"
+              content="default-src 'self' https://kit.fontawesome.com data: https://ssl.gstatic.com 'unsafe-eval'; 
+              style-src 'self' 'unsafe-inline' fonts.googleapis.com https://cdnjs.cloudflare.com; 
+              media-src *; 
+              connect-src 'self' https://api.openweathermap.org https://ka-f.fontawesome.com; 
+              font-src 'self' fonts.gstatic.com  https://ka-f.fontawesome.com https://cdnjs.cloudflare.com/; 
+              img-src 'self' https://countryflagsapi.com/;"
         >
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -45,8 +50,11 @@
         <link rel="stylesheet" href="css/owfont-regular.min.css">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="https://kit.fontawesome.com/d91fcbcd45.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!--<script src="https://kit.fontawesome.com/d91fcbcd45.js" crossorigin="anonymous"></script>-->
 
+        <link rel="stylesheet" href="css/weather-icons.min.css">
+        <link rel="stylesheet" href="css/weather-icons-wind.min.css">
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/styles.css">
         
@@ -95,19 +103,67 @@
                 </div>
                 <div class="container" id="sunmovement">
                     <div class="row">
-                        <div class="col-6">
-                            <i class="fa-solid fa-sunrise"></i><span id="sunrise"></span>
+                        <div class="col">
+                            <div>
+                                <i class="wi wi-sunrise"></i>
+                            </div>
+                            <div>
+                                <h5 class="opensans-light">Sunrise</h5>
+                                <div id="sunrise" class="opensans-light"></div>
+                            </div>
                         </div>
                             
-                        <div class="col-6">
-                            <i class="fa-solid fa-sunset"></i><div id="sunset"></div>
+                        <div class="col">
+                            <div>
+                                <i class="wi wi-sunset"></i>
+                            </div>
+                            <div>
+                                <h5 class="opensans-light">Sunset</h5>
+                                <div id="sunset" class="opensans-light"></div>
+                            </div>
                         </div>
                     </div>  
+                </div>
+                <div class="container" id="misc">
+                    <div class="row">
+                        <div class="col">
+                            <div>
+                                <i class="wi wi-barometer"></i>
+                            </div>
+                            <div>
+                                <h5 class="opensans-light">Pressure</h5>
+                                <div class="opensans-light"><span id="pressure"></span> hPA</div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col">
+                            <div>
+                                <i class="wi wi-humidity"></i>
+                            </div>
+                            <div>
+                                <h5 class="opensans-light">Humidity</h5>
+                                <div class="opensans-light"><span id="humidity"></span> %</div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div>
+                                <i class="wi wi-strong-wind"></i>
+                            </div>
+                            <div>
+                                <h5 class="opensans-light">Wind Speed</h5>
+                                <div class="opensans-light"><span id="windSpeed"></span> m/sec</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
        
         <script src="js/jquery-3.6.1.min.js"></script>
+        <script src="js/moment.js"></script>
+
         <!--<script src="cordova.js"></script>-->
         <script src="js/weather.js"></script>
         <!-- <script src="js/index.js"></script> -->
