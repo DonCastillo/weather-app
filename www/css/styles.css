@@ -1,11 +1,169 @@
-body {
-    font-family: 'Open Sans', sans-serif;
+.opensans-light {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 300;
 }
 
-header {
-    padding: 25px 0;
+.opensans-regular {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 400;
 }
+
+.opensans-bold {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 700;
+}
+
+body {
+	font-family: "Open Sans", sans-serif;
+}
+i[class^="fa-"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#wrapper {
+	padding-top: 134px;
+	position: relative;
+}
+header {
+	padding: 25px 0;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+#searchicon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	padding: 10px;
+}
+#searchicon:hover {
+    cursor: pointer;
+}
+#searchicon {
+
+}
+/* sup {
+    top: -1.5em;
+} */
 
 input {
-    padding:20px;
+	padding: 20px !important;
+	font-size: 1.5rem;
+}
+
+a {
+	text-decoration: none;
+	color: unset;
+}
+
+#options {
+	max-height: 50vh;
+	overflow-y: auto;
+	background-color: #fff;
+	z-index: 9999;
+	position: relative;
+}
+.option {
+	padding: 20px 10px;
+	font-size: 1rem;
+}
+.option.selected {
+	background-color: grey;
+}
+.option:hover {
+	background-color: pink;
+}
+.option .country {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.option .city {
+	font-weight: light;
+	text-transform: capitalize;
+}
+main {
+	background-color: bisque;
+}
+#hero {
+	background-color: lightblue;
+	padding: 10%;
+	height: 50vh;
+	max-height: 320px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#maintemp {
+	text-align: center;
+}
+#temp {
+	/* background-color: orange; */
+	font-size: 7rem;
+	line-height: 7rem;
+	text-align: center;
+	letter-spacing: -0.7rem;
+}
+#location {
+	text-transform: capitalize;
+	font-size: 2.5rem;
+}
+#countryCode {
+	margin-left: 4px;
+}
+#countryflag {
+	height: 20px;
+}
+#condition {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+}
+#conditionicon {
+	font-size: 2.5rem;
+	margin-right: 7px;
+	line-height: 1rem;
+}
+#description {
+	font-size: 1rem;
+	text-transform: capitalize;
+}
+#moretemp {
+	text-align: center;
+	font-size: 1.1rem;
+	line-height: 1rem;
+	margin-top: 7px;
+	text-transform: lowercase;
+}
+#hilo {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: nowrap;
+	margin-top: 10px;
+}
+.deg {
+	top: -0.1em;
+	font-size: 1.2rem;
+}
+#maintemp .deg {
+	top: -1.7em;
+	font-weight: bold;
+	font-size: 3em;
+}
+#sunmovement {
+    /* display:flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-content: center; */
+}
+#sunrise, #sunset {
+    background-color:yellowgreen;
 }

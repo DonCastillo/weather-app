@@ -28,7 +28,9 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; media-src *; img-src 'self' data: content:; connect-src 'self' https://api.openweathermap.org; font-src 'self' fonts.gstatic.com;">
+        <meta http-equiv="Content-Security-Policy" 
+              content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; media-src *; connect-src 'self' https://api.openweathermap.org; font-src 'self' fonts.gstatic.com; img-src 'self' https://countryflagsapi.com/;"
+        >
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -40,23 +42,71 @@
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="css/owfont-regular.min.css">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="https://kit.fontawesome.com/d91fcbcd45.js" crossorigin="anonymous"></script>
+
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/styles.css">
         
         <title>Weather App</title>
     </head>
     <body>
-        <header>
-            <div class="container bg-warning">
-                <input type="text" class="form-control" placeholder="Enter City">
-            </div>
-        </header>
-        <main>
-            <div>14 &deg;</div>
-            <div><p>It's a warm fall day</p></div>
-            <div>max: 29C</div>
-            <div>min: 10C</div>
-        </main>
+        <div id="wrapper">
+            <header class="">
+                <div class="container">
+                    <form id="search">
+                        <div class="position-relative">
+                            <input id="cityfield" type="text" class="form-control opensans-bold" placeholder="Enter City">
+                            <button class="btn" id="searchicon">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                        <div id="options"></div>
+                    </form>
+                </div>
+            </header>
+            <main>
+                <div class="container" id="hero">
+                    <div>
+                        <h1 class="opensans-light">
+                            <div>
+                                <span id="location"></span>
+                                <sup id="countryCode"><img src="" id="countryflag"/></sup>
+                            </div>
+                            <div id="condition">
+                                <span id="conditionicon"><i></i></span>
+                                <span id="description"></span>
+                            </div>
+                        </h1>
+                        <div id="maintemp">
+                            <span id="temp" class="opensans-regular"></span>
+                            <sup class="deg">&deg;</sup>
+                        </div>
+                        <div id="moretemp" class="opensans-light">
+                            <div>Feels like <span id="feelslike" class="opensans-bold"></span><sup class="deg">&deg;</sup></div>
+                            <div id="hilo">
+                                <span>Min <span id="mintemp" class="opensans-bold"></span><sup class="deg">&deg;</sup></span>
+                                <span>Max <span id="maxtemp" class="opensans-bold"></span><sup class="deg">&deg;</sup></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" id="sunmovement">
+                    <div class="row">
+                        <div class="col-6">
+                            <i class="fa-solid fa-sunrise"></i><span id="sunrise"></span>
+                        </div>
+                            
+                        <div class="col-6">
+                            <i class="fa-solid fa-sunset"></i><div id="sunset"></div>
+                        </div>
+                    </div>  
+                </div>
+            </main>
+        </div>
+       
         <script src="js/jquery-3.6.1.min.js"></script>
         <!--<script src="cordova.js"></script>-->
         <script src="js/weather.js"></script>
