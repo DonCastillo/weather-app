@@ -97,7 +97,7 @@ main {
 #hero {
 	background-color: lightblue;
 	padding: 10%;
-	height: 50vh;
+	/* height: 50vh; */
 	max-height: 320px;
 	display: flex;
 	justify-content: center;
@@ -176,14 +176,15 @@ main {
     padding-bottom:10px;
 }
 #misc i,
-#sunmovement i {
+#sunmovement i,
+.forecast-card i {
     font-size:2rem;
     margin-right:10px;
 }
 #sunrise, #sunset, #pressure, #humidity, #windSpeed {
     font-size: 1rem;
 }
-#forecast {
+#forecastList {
     background-color: coral;
     display: inline-flex;
     flex-direction: row;
@@ -191,11 +192,28 @@ main {
     justify-content: flex-start;
     align-items: center;
     overflow-x: auto;
-    padding:10px
+    padding:10px;
+    width:100%;
 }
-#forecast > div {
+.forecast-card  {
     background-color: #fff;
-    /* height:300px; */
-    /* width: 150px; */
-    margin:10px;
+    height: 145px;
+    min-width: 110px;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.forecast-card h6 {
+    text-align: center;
+    margin-bottom:0;
+}
+.forecast-card i {
+    margin:0;
+}
+.forecast-card .forecast-symbol {
+    text-align:center;
+    margin:10px 0;
 }

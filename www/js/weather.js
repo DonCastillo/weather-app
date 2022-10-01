@@ -1,6 +1,6 @@
 const OPENWEATHER_API = 'de6e56b5bb651df9844567bf0e22e6e8';
 const COUNTRY_FLAG_ENDPOINT = 'https://countryflagsapi.com/png'
-const DEFAUL_CITY_ID = '6053154'; //Lethbridge
+const DEFAULT_CITY_ID = '6053154'; //Lethbridge
 let CITIES = [];
 
 
@@ -10,6 +10,39 @@ function RenderCityOption(id, name, country) {
                     <span class="city">${name}</span>, <span class="country">${country}</span>
                 </div>
             </a>`;
+}
+
+function RenderForecastCard(datetime, temp, weatherID, weatherDescription, timezone) {
+    return `
+    <div class="forecast-card">
+        <h6>
+            <div class="forecast-date opensans-light">${FormatDate(datetime, timezone)}</div>
+            <div class="forecast-time opensans-light">${FormatTime(datetime, timezone)}</div>
+        </h6>
+        <div class="forecast-symbol"><i class="wi wi-owm-${weatherID}"></i></div>
+        <h6 class="opensans-light">${Math.round(temp)} &deg;</h6>
+    </div>`;
+}
+
+
+function FormatTime(dt, timezone) {
+    return moment.utc(dt, 'X').add(timezone, 'seconds').format('hh:mm a');
+}
+
+function FormatDate(dt, timezone) {
+    return moment.utc(dt, 'X').add(timezone, 'seconds').format('MMM DD');
+}
+
+
+function RenderForecast(forecast) {
+    console.log(forecast)
+    if(forecast.list.length === 0) new Error('No forecast to report.');
+    if(!forecast.city.id) new Error('No city for this forecast');
+
+    $('#forecastList').html('');
+    forecast.list.forEach(function (weather) {
+        $('#forecastList').append(RenderForecastCard(weather.dt, weather.main.temp, weather.weather[0].id, weather.weather[0].description, forecast.city.timezone));
+    });
 }
 
 function RenderWeather(weatherJSON) {
@@ -30,8 +63,8 @@ function RenderWeather(weatherJSON) {
     const sunrise = weatherJSON.sys.sunrise;
     const timezone = weatherJSON.timezone;
 
-    const localSunrise = moment.utc(sunrise, 'X').add(timezone, 'seconds').format('hh:mm a');
-    const localSunset = moment.utc(sunset, 'X').add(timezone, 'seconds').format('hh:mm a');
+    const localSunrise = FormatTime(sunrise, timezone);
+    const localSunset = FormatTime(sunset, timezone);
     
 
     $('#temp').text('');
@@ -42,7 +75,6 @@ function RenderWeather(weatherJSON) {
     $('#mintemp').text('');
     $('#maxtemp').text('');
     $('#countryCode > img').attr('src', '');
-    // $('#countryCode').text('');
 
     if(temp) $('#temp').text(Math.round(temp));
     if(minTemp) $('#mintemp').text(Math.round(minTemp));
@@ -57,15 +89,10 @@ function RenderWeather(weatherJSON) {
     if(countryCode) $('#countryCode > img').attr('src', `${COUNTRY_FLAG_ENDPOINT}/${countryCode}`);
     if(sunset) $('#sunset').text(localSunset);
     if(sunrise) $('#sunrise').text(localSunrise);
-
-    // if(weatherJSON.sys.country) {
-    //     $('#countryCode').text(weatherJSON.sys.country);
-    // }
-    
-
-
-    console.log(weatherJSON)
 }
+
+
+
 
 
 function SearchHandler(event) {
@@ -87,7 +114,6 @@ function SearchHandler(event) {
 }
 
 async function FindCurrentWeather(cityID) {
-    console.log('city id selected: ', cityID);
     return new Promise((resolve, reject) => {
         $.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&id=${cityID}&appid=${OPENWEATHER_API}`)
             .done(function(data) {
@@ -98,9 +124,23 @@ async function FindCurrentWeather(cityID) {
                 reject(new Error('Cannot fetch latest weather report.'))
              })
     });
-    
+}
 
-
+async function FindForecastWeather(cityID) {
+    return new Promise((resolve, reject) => {
+        $.get(`https://api.openweathermap.org/data/2.5/forecast?units=metric&id=${cityID}&appid=${OPENWEATHER_API}`)
+            .done(function(data) {
+                if(data.list.length > 20) {
+                    resolve({list: data.list.slice(0, 20), city: data.city});
+                } else {
+                    resolve({list: data.list, city: data.city});
+                }
+            })
+            .fail(function(error) {
+                console.log(error);
+                reject(new Error('Cannot fetch forecast report.'))
+             })
+    });
 }
 
 async function OptionClickHandler(event) {
@@ -113,6 +153,9 @@ async function OptionClickHandler(event) {
 
     const weatherJSON = await FindCurrentWeather(cityID);
     RenderWeather(weatherJSON);
+    const forecastJSON = await FindForecastWeather(cityID);
+    RenderForecast(forecastJSON);
+
 }
 
 function FocusInSearchHandler(event) {
@@ -159,8 +202,10 @@ $(document).ready(async function() {
     try {
         CITIES = await FetchCities();
         $('#cityfield').val('Lethbridge');
-        const DEFAULT_CITY_ID_JSON = await FindCurrentWeather(DEFAUL_CITY_ID);
+        const DEFAULT_CITY_ID_JSON = await FindCurrentWeather(DEFAULT_CITY_ID);
         RenderWeather(DEFAULT_CITY_ID_JSON);
+        const DEFAULT_CITY_ID_FORECAST = await FindForecastWeather(DEFAULT_CITY_ID);
+        RenderForecast(DEFAULT_CITY_ID_FORECAST);
         // console.log('working here: ', CITIES);
     } catch(error) {
 
