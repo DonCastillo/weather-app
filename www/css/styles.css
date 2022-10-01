@@ -92,11 +92,11 @@ h5 {
 	text-transform: capitalize;
 }
 main {
-	background-color: bisque;
+	/* background-color: bisque; */
 }
 #hero {
-	background-color: lightblue;
-	padding: 10%;
+	/* background-color: lightblue; */
+	padding: 0 10% 10%;
 	/* height: 50vh; */
 	max-height: 320px;
 	display: flex;
@@ -185,7 +185,7 @@ main {
     font-size: 1rem;
 }
 #forecastList {
-    background-color: coral;
+    /* background-color: coral; */
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
