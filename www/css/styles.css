@@ -183,3 +183,19 @@ main {
 #sunrise, #sunset, #pressure, #humidity, #windSpeed {
     font-size: 1rem;
 }
+#forecast {
+    background-color: coral;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+    padding:10px
+}
+#forecast > div {
+    background-color: #fff;
+    /* height:300px; */
+    /* width: 150px; */
+    margin:10px;
+}
