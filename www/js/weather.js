@@ -45,6 +45,72 @@ function RenderForecast(forecast) {
     });
 }
 
+function RenderBackgroundImage(weatherCategory) {
+    $('body').removeClass();
+    $('#credit').attr('href', '').text('');
+
+    console.log('weather cat:', weatherCategory);
+    const condition = weatherCategory.slice(0,2);
+    const time = weatherCategory.slice(-1);
+    let backgroundClass = '';
+    let author = '';
+    let authorUrl = '';
+    switch(condition) {
+        case '01':
+            if (time === 'n') {
+                backgroundClass = 'con-clearnight';
+                author = 'Klemen Vrankar';
+                authorUrl = 'https://unsplash.com/@vklemen?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText';
+            } else {
+                backgroundClass = 'con-clearday';
+                author = 'Grooveland Designs';
+                authorUrl = 'https://unsplash.com/@groovelanddesigns?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText';
+            }
+            break;
+        case '02':
+        case '03':
+        case '04':
+            if (time === 'n') {
+                backgroundClass = 'con-cloudynight';
+                authorUrl = 'https://unsplash.com/@hngstrm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText';
+                author = 'Henry & Co.';
+            } else {
+                backgroundClass = 'con-cloudyday';
+                authorUrl = 'https://unsplash.com/@billy_huy?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText';
+                author = 'Billy Huynh';
+            }
+            break;
+        case '09':
+        case '10':
+            backgroundClass = 'con-rainy';
+            author = 'Brazil Topno';
+            authorUrl = 'https://unsplash.com/@b620?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'
+            break;
+        case '11':
+            backgroundClass = 'con-thunderstorm';
+            author = 'Brandon Morgan';
+            authorUrl = 'https://unsplash.com/@littleppl85?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText';
+            break;
+        case '13':
+            backgroundClass = 'con-snow';
+            author = 'Aditya Vyas';
+            authorUrl = 'https://unsplash.com/@aditya1702?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText';
+            break;
+        case '50':
+            backgroundClass = 'con-hazy';
+            author = 'Glenn Abelson';
+            authorUrl = 'https://unsplash.com/@glenna1984?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText';
+            break;
+        default:
+            backgroundClass = 'con-default';
+            author = '';
+            authorUrl = '';
+            break;
+    }
+    $('body').addClass(backgroundClass);  
+    $('#credit').attr('href', authorUrl).text(author);
+}
+
 function RenderWeather(weatherJSON) {
     if(!weatherJSON) new Error('Current weather cannot be reported.');
 
@@ -58,6 +124,7 @@ function RenderWeather(weatherJSON) {
     const city = weatherJSON.name;
     const description = weatherJSON.weather[0].description;
     const id = weatherJSON.weather[0].id;
+    const weatherCategory = weatherJSON.weather[0].icon;
     const countryCode = weatherJSON.sys.country;
     const sunset = weatherJSON.sys.sunset;
     const sunrise = weatherJSON.sys.sunrise;
@@ -89,6 +156,8 @@ function RenderWeather(weatherJSON) {
     if(countryCode) $('#countryCode > img').attr('src', `${COUNTRY_FLAG_ENDPOINT}/${countryCode}`);
     if(sunset) $('#sunset').text(localSunset);
     if(sunrise) $('#sunrise').text(localSunrise);
+
+    RenderBackgroundImage(weatherCategory);
 }
 
 
@@ -145,17 +214,23 @@ async function FindForecastWeather(cityID) {
 
 async function OptionClickHandler(event) {
     const cityID = $(this).attr('data-id');
-
-    $('.option').removeClass('selected')
-    $(this).addClass('selected');
-    $('#options').hide();
-    $('#cityfield').val($(this).attr('data-city').trim())
-
-    const weatherJSON = await FindCurrentWeather(cityID);
-    RenderWeather(weatherJSON);
-    const forecastJSON = await FindForecastWeather(cityID);
-    RenderForecast(forecastJSON);
-
+    try {
+        ShowBodySpinner();
+        $('.option').removeClass('selected')
+        $(this).addClass('selected');
+        $('#options').hide();
+        $('#cityfield').val($(this).attr('data-city').trim())
+    
+        const weatherJSON = await FindCurrentWeather(cityID);
+        RenderWeather(weatherJSON);
+        const forecastJSON = await FindForecastWeather(cityID);
+        RenderForecast(forecastJSON);
+    
+    } catch (error) {
+        console.log(error)
+    } finally {
+        HideBodySpinner();
+    }
 }
 
 function FocusInSearchHandler(event) {
@@ -187,13 +262,20 @@ async function FetchCities() {
 }
 
 
+function ShowBodySpinner() {
+    $('#spinner').css('display', 'flex');
+}
 
+function HideBodySpinner() {
+    $('#spinner').css('display', 'none');
+}
 
 
 
 
 $(document).ready(async function() {
 
+    ShowBodySpinner();
     $('#cityfield').on('keyup', SearchHandler);
     $('#search #cityfield').on('focusin', FocusInSearchHandler);
     $('#search').on('submit', SearchHandler);
@@ -208,10 +290,8 @@ $(document).ready(async function() {
         RenderForecast(DEFAULT_CITY_ID_FORECAST);
         // console.log('working here: ', CITIES);
     } catch(error) {
-
+        console.log(error)
+    } finally {
+        HideBodySpinner();
     }
-
-
-
-
 });
