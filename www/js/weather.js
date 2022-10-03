@@ -35,7 +35,6 @@ function FormatDate(dt, timezone) {
 
 
 function RenderForecast(forecast) {
-    console.log(forecast)
     if(forecast.list.length === 0) new Error('No forecast to report.');
     if(!forecast.city.id) new Error('No city for this forecast');
 
@@ -49,7 +48,6 @@ function RenderBackgroundImage(weatherCategory) {
     $('body').removeClass();
     $('#credit').attr('href', '').text('');
 
-    console.log('weather cat:', weatherCategory);
     const condition = weatherCategory.slice(0,2);
     const time = weatherCategory.slice(-1);
     let backgroundClass = '';
@@ -273,6 +271,7 @@ function HideBodySpinner() {
 
 
 
+
 $(document).ready(async function() {
 
     ShowBodySpinner();
@@ -288,10 +287,16 @@ $(document).ready(async function() {
         RenderWeather(DEFAULT_CITY_ID_JSON);
         const DEFAULT_CITY_ID_FORECAST = await FindForecastWeather(DEFAULT_CITY_ID);
         RenderForecast(DEFAULT_CITY_ID_FORECAST);
-        // console.log('working here: ', CITIES);
     } catch(error) {
         console.log(error)
     } finally {
         HideBodySpinner();
     }
+
+
+    $(document).on('click', function(event) {
+        if($(event.target).closest('form#search').length === 0) {
+            $('#options').hide();
+        }
+    })
 });
